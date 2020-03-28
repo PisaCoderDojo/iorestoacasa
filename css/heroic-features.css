@@ -11,13 +11,16 @@ body {
 }
 
 .top {
-  padding-top: 10%;
+  padding-top: 5%;
   padding-bottom: 5%;
 }
 
 @media screen and (min-width: 200px) and (max-width: 799px) {
   .display-3 {
     font-size: 2rem;
+  }
+  .top {
+    padding-top: 10%;
   }
 }
 
