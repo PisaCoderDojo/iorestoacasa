@@ -15,12 +15,12 @@ body {
   padding-bottom: 5%;
 }
 
-@media screen and (min-width: 200px) and (max-width: 799px) {
+@media screen and (max-width: 799px) {
   .display-3 {
     font-size: 2rem;
   }
   .top {
-    padding-top: 10%;
+    padding-top: 15%;
   }
 }
 
