@@ -3,6 +3,19 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-heroic-features/blob/master/LICENSE)
  */
+ @font-face {
+  font-family: dojoFont;
+  src:url("../fonts/Lato-Black.ttf");
+}
+
+h1{
+  font-family: dojoFont;
+}
+
+b {
+  font-weight: bold;
+}
+
 body {
   background-image: url("/img/11822.jpg");
 }
