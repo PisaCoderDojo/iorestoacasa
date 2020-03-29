@@ -1,4 +1,4 @@
-# #iorestoacasa e programmo!
+# #iorestoacasa e #programmo!
 
 * Una **nuova iniziativa** del Pisa Coderdojo per tutti i Ninja e per i loro genitori!
 * Una serie di **video-tutorial per mantenere vivo lo spirito di CoderDojo** in questi giorni così difficili per tutti. 
