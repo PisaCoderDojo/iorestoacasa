@@ -24,7 +24,7 @@ body {
 }
 
 .top {
-  padding-top: 2%;
+  /* padding-top: .05%; */
   padding-bottom: 5%;
 }
 
@@ -70,4 +70,8 @@ body {
 
 .text_left {
   text-align: left;
+}
+
+.card-title {
+  font-size: 1.4rem;
 }
