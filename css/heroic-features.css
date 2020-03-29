@@ -3,12 +3,12 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-heroic-features/blob/master/LICENSE)
  */
- @font-face {
+@font-face {
   font-family: dojoFont;
-  src:url("../fonts/Lato-Black.ttf");
+  src: url("/font/Lato-Black.ttf");
 }
 
-h1{
+h1 {
   font-family: dojoFont;
 }
 
@@ -23,6 +23,16 @@ body {
 .logo {
 }
 
+.display-2 {
+  font-size: 1.5rem !important;
+  font-weight: bold;
+}
+
+.display-3 {
+  font-size: 2rem !important;
+  font-weight: bold;
+}
+
 .top {
   padding-top: 2%;
   padding-bottom: 5%;
@@ -32,6 +42,12 @@ body {
   .display-3 {
     font-size: 2rem;
   }
+
+  .display-2 {
+    font-size: 1rem !important;
+    font-weight: bold;
+  }
+
   .top {
     padding-top: 15%;
   }
