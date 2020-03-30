@@ -28,6 +28,10 @@ body {
   padding-bottom: 5%;
 }
 
+.btn-fb {
+  padding: 10px 0px 25px;
+}
+
 @media screen and (max-width: 799px) {
   .display-3 {
     font-size: 1.2rem !important;
