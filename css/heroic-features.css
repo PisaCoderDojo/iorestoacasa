@@ -32,6 +32,42 @@ body {
   padding: 10px 0px 25px;
 }
 
+.skill-bar {
+    box-sizing: border-box;
+    font-weight: 300;
+    line-height: 36px;
+}
+
+.skill-bar span {
+  display: inline-block;
+  font-weight: bold;
+  width: 50px;
+}
+
+.skill-level {
+  display: inline-block;
+}
+
+.yes {
+  display: inline-block;
+}
+
+.yes i{
+  color: #0d0d0d;
+}
+
+.no {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-top: 10px;
+  margin-right: 2px;
+}
+
+.no i {
+  color: #5599cb;
+}
+
 @media screen and (max-width: 799px) {
   .display-3 {
     font-size: 1.2rem !important;
@@ -77,7 +113,7 @@ body {
 }
 
 .card-title {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .lead {
