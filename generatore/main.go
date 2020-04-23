@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
+	"encoding/base64"
 	"encoding/csv"
 	"flag"
 	"fmt"
@@ -9,8 +11,10 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net/url"
 	"os"
 	"os/exec"
+	"strings"
 
 	texttemplate "text/template"
 	"time"
@@ -28,14 +32,74 @@ type card struct {
 }
 
 func main() {
+	interactive := flag.Bool("i", false, "Interactive Add Release")
 	skipPreview := flag.Bool("s", false, "Skip auto-preview")
 	prfBrowser := flag.String("b", "", "Preferred browser")
 	flag.Parse()
+
+	if *interactive {
+		if err := add(*interactive); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+	}
 
 	if err := run(*prfBrowser, os.Stdout, *skipPreview); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
+
+func EncodeStringBase64(s string) string {
+	return base64.StdEncoding.EncodeToString([]byte(s))
+}
+
+func readInput(rd *bufio.Reader, s string, pattern string, newCard []string, urlEconde bool) ([]string, error) {
+	fmt.Print(s)
+	text, err := rd.ReadString('\n')
+	field := strings.TrimSpace(text)
+	// either url or pattern
+	if urlEconde {
+		u, err := url.Parse(pattern)
+		if err != nil {
+			log.Fatal(err)
+		}
+		u.Path += field
+		field = u.String()
+	} else {
+		field = fmt.Sprintf(pattern, field)
+	}
+	newCard = append(newCard, field)
+	return newCard, err
+}
+
+func add(interactive bool) error {
+	var newCard []string
+	rd := bufio.NewReader(os.Stdin)
+	fmt.Println("Add a new Card")
+	newCard, err := readInput(rd, "Title: ", "%s", newCard, false)
+	if err != nil {
+		return err
+	}
+	newCard, err = readInput(rd, "Description: ", "%s", newCard, false)
+	if err != nil {
+		return err
+	}
+	newCard, err = readInput(rd, "YouTube ID: ", "https://www.youtube.com/embed/", newCard, true)
+	if err != nil {
+		return err
+	}
+	newCard, err = readInput(rd, "Slides filename: ", "https://github.com/PisaCoderDojo/dojo-slides/raw/master/iorestoacasa/", newCard, true)
+	if err != nil {
+		return err
+	}
+	// stars field is not yet used, here for PR compatibility
+	newCard = append(newCard, "100")
+	err = writeCSV(newCard)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func run(prfBrowser string, out io.Writer, skipPreview bool) error {
@@ -120,7 +184,7 @@ func readCsv(inputCard []byte) ([]byte, error) {
 	}
 	r := csv.NewReader(csvfile)
 
-	r.Comma = ';'
+	r.Comma = '|'
 
 	t, err := texttemplate.New("card").Parse(string(inputCard))
 	if err != nil {
@@ -135,7 +199,6 @@ func readCsv(inputCard []byte) ([]byte, error) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("Title: %s Text: %s Youtube: %s Slides: %s\n", record[0], record[1], record[2], record[3])
 		c := card{
 			Title:   record[0],
 			Text:    record[1],
@@ -150,4 +213,32 @@ func readCsv(inputCard []byte) ([]byte, error) {
 		cards = append(cards, buffer.Bytes()...)
 	}
 	return cards, nil
+}
+
+func writeCSV(record []string) error {
+	csvfile, err := os.Open("data.csv") //, os.O_RDWR, 0644)
+	if err != nil {
+		return err
+	}
+	r := csv.NewReader(csvfile)
+
+	r.Comma = '|'
+	records, err := r.ReadAll()
+
+	records = append([][]string{record}, records...)
+
+	csvfile, err = os.OpenFile("data.csv", os.O_WRONLY, 0)
+	if err != nil {
+		return err
+	}
+	writer := csv.NewWriter(csvfile)
+	writer.Comma = '|'
+	defer writer.Flush()
+	writer.WriteAll(records)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

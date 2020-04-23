@@ -8,3 +8,18 @@
 
 
 [locandina]: https://raw.githubusercontent.com/PisaCoderDojo/iorestoacasa/master/img/locandina.png "Locandina #iorestoacasa e programmo!"
+
+## Using the generator
+> run interactive mode update data.csv
+
+```
+$ cd generatore/
+$ go build
+$ ./generatore -i
+> Add a new Card
+> Title: Catabunga AR
+> Description: Realizziamo un gioco con AR utilizzando la webcam del vostro PC!
+> YouTube ID: NsDYcBGim_I
+> Slides filename: 02_Catabunga_AR.pdf
+
+```
