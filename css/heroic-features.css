@@ -74,6 +74,11 @@ body {
   color: #5599cb;
 }
 
+.noWrap {
+  white-space: nowrap;
+  margin-right: 5px;
+}
+
 @media screen and (max-width: 799px) {
   .display-3 {
     font-size: 1.2rem !important;
