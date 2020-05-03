@@ -30,6 +30,12 @@ body {
 
 .btn-fb {
   padding: 10px 0px 25px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.space-top{
+  padding-top: 30px;
 }
 
 .skill-bar {
