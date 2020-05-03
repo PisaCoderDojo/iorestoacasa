@@ -29,7 +29,11 @@ type card struct {
 	Text    string
 	YouTube string
 	Slides  string
+	Stars   string
 }
+
+var star = `
+              <div class="%s"><i class="fas fa-yin-yang"></i></div>`
 
 func main() {
 	interactive := flag.Bool("i", false, "Interactive Add Release")
@@ -73,6 +77,17 @@ func readInput(rd *bufio.Reader, s string, pattern string, newCard []string, url
 	return newCard, err
 }
 
+func numberToRating(n string) string {
+	switch n {
+	case "3":
+		return "111"
+	case "2":
+		return "110"
+	default:
+		return "100"
+	}
+}
+
 func add(interactive bool) error {
 	var newCard []string
 	rd := bufio.NewReader(os.Stdin)
@@ -93,8 +108,11 @@ func add(interactive bool) error {
 	if err != nil {
 		return err
 	}
-	// stars field is not yet used, here for PR compatibility
-	newCard = append(newCard, "100")
+	newCard, err = readInput(rd, "Stars # (1-3): ", "%s", newCard, false)
+	if err != nil {
+		return err
+	}
+	newCard[len(newCard)-1] = numberToRating(newCard[len(newCard)-1])
 	err = writeCSV(newCard)
 	if err != nil {
 		return err
@@ -199,11 +217,22 @@ func readCsv(inputCard []byte) ([]byte, error) {
 		if err != nil {
 			log.Fatal(err)
 		}
+		fmt.Printf("Title: %s \n", record[0])
+		var total string = ""
+		for _, char := range record[4] {
+			switch char {
+			case '1':
+				total += fmt.Sprintf(star, "yes")
+			case '0':
+				total += fmt.Sprintf(star, "no")
+			}
+		}
 		c := card{
 			Title:   record[0],
 			Text:    record[1],
 			YouTube: record[2],
 			Slides:  record[3],
+			Stars:   total,
 		}
 
 		var buffer bytes.Buffer
