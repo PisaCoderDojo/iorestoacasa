@@ -21,5 +21,6 @@ $ ./generatore -i
 > Description: Realizziamo un gioco con AR utilizzando la webcam del vostro PC!
 > YouTube ID: NsDYcBGim_I
 > Slides filename: 02_Catabunga_AR.pdf
-
+> Stars # (1-3): 2
+> Remix base: https://bit.ly/CatabungaAR
 ```
