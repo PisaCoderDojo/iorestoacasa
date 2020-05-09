@@ -30,10 +30,12 @@ type card struct {
 	YouTube string
 	Slides  string
 	Stars   string
+	Remix   string
 }
 
 var star = `
               <div class="%s"><i class="fas fa-yin-yang"></i></div>`
+var remix = `<br>Link <a href="%s" target="_blank">Progetto Base</a> `
 
 func main() {
 	interactive := flag.Bool("i", false, "Interactive Add Release")
@@ -113,6 +115,10 @@ func add(interactive bool) error {
 		return err
 	}
 	newCard[len(newCard)-1] = numberToRating(newCard[len(newCard)-1])
+	newCard, err = readInput(rd, "Remix base: ", "%s", newCard, false)
+	if err != nil {
+		return err
+	}
 	err = writeCSV(newCard)
 	if err != nil {
 		return err
@@ -227,12 +233,17 @@ func readCsv(inputCard []byte) ([]byte, error) {
 				total += fmt.Sprintf(star, "no")
 			}
 		}
+		var link string = ""
+		if record[5] != "" {
+			link += fmt.Sprintf(remix, record[5])
+		}
 		c := card{
 			Title:   record[0],
 			Text:    record[1],
 			YouTube: record[2],
 			Slides:  record[3],
 			Stars:   total,
+			Remix:   link,
 		}
 
 		var buffer bytes.Buffer
