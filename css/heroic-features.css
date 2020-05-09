@@ -79,6 +79,10 @@ body {
   margin-right: 5px;
 }
 
+code {
+  color: #487aff;
+}
+
 @media screen and (max-width: 799px) {
   .display-3 {
     font-size: 1.2rem !important;
